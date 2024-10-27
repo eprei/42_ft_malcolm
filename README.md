@@ -79,7 +79,3 @@ The following system calls and functions can be used in this project:
 ## Security Notice
 
 ⚠️ **Important**: This tool is for educational purposes only. Only use it in controlled environments with systems you own or have explicit permission to test. Unauthorized ARP spoofing may be illegal and can cause network disruptions.
-
-## Acknowledgments
-
-- Project created as part of the networking security curriculum
