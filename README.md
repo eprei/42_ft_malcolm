@@ -2,6 +2,18 @@
 
 A C program that implements Address Resolution Protocol (ARP) spoofing/poisoning, demonstrating one of the most basic Man-in-the-Middle (MITM) attacks. This project explores network security concepts by exploiting vulnerabilities in the ARP protocol implementation.
 
+## Project Status
+
+**🚧 Under Active Development**
+
+Current Status:
+- ✅ Project structure and build system
+- ✅ Input validation for IP and MAC addresses
+- ⏳ Signal handling (Pending)
+- 🚧 ARP packet creation (In Progress)
+- ⏳ Network packet handling (Pending)
+- ⏳ ARP spoofing implementation (Pending)
+
 ## About The Project
 
 ft_malcolm is an educational project focused on understanding network security, specifically the Address Resolution Protocol (ARP) and its vulnerabilities. The program allows users to perform ARP spoofing by intercepting and modifying ARP requests in a controlled environment.
