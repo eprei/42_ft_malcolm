@@ -1,4 +1,4 @@
-srNAME = ft_malcolm
+NAME = ft_malcolm
 
 SRC_DIR = src
 SRCS = $(wildcard $(SRC_DIR)/*.c)
