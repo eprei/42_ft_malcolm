@@ -53,3 +53,5 @@ dkms.conf
 
 # MacOs Files
 .DS_Store
+
+*.pdf
