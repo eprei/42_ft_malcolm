@@ -1,7 +1,7 @@
 #ifndef MACROS_H
 # define MACROS_H
 
-# define PROGRAM_NAME "./ft_malcolm"
+# define BINARY_NAME "./ft_malcolm"
 # define EXPECTED_NUMBER_OF_ARGUMENTS 5
 # define IP_ADDRESS_LENGTH 15
 # define MAC_ADDRESS_LENGTH 17
@@ -12,4 +12,4 @@
 # define MALCOLM_ERROR_04 4
 # define MALCOLM_ERROR_05 5
 
-#endif
+#endif //MACROS_H
