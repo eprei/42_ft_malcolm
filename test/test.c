@@ -23,7 +23,7 @@ int run_test(const test_case_t test) {
     }
 
     if (pid == 0) {
-        execve(PROGRAM_NAME, test.args, NULL);
+        execve(BINARY_NAME, test.args, NULL);
         perror("Execve error");
         exit(1);
     }
@@ -40,12 +40,12 @@ void run_all_tests(test_case_t tests[], const int num_tests) {
 }
 
 int main() {
-    char *args1[] = {PROGRAM_NAME, NULL};
-    char *args2[] = {PROGRAM_NAME, "arg1", "arg2", "arg3", "arg4", NULL};
-    char *args3[] = {PROGRAM_NAME, "192.168.1.1111111", "ff:bb:ff:ff:ee:ff", "10.12.10.22", "ff:bb:ff:ff:ee:ff", NULL};
-    char *args4[] = {PROGRAM_NAME, "10.12.10.22", "aaa:bb:cc:dd:ee:fff", "10.12.10.22", "ff:bb:ff:ff:ee:ff", NULL};
-    char *args5[] = {PROGRAM_NAME, "abcde", "aaa:bb:cc:dd:ee:fff", "10.12.10.22", "ff:bb:ff:ff:ee:ff", NULL};
-    char *args6[] = {PROGRAM_NAME, "192.168.1.1", "ff:bb:ff:ff:ee:ff", "192.168.1.1", "ff:bb:ff:ff:ee:ff", NULL};
+    char *args1[] = {BINARY_NAME, NULL};
+    char *args2[] = {BINARY_NAME, "arg1", "arg2", "arg3", "arg4", NULL};
+    char *args3[] = {BINARY_NAME, "192.168.1.1111111", "ff:bb:ff:ff:ee:ff", "10.12.10.22", "ff:bb:ff:ff:ee:ff", NULL};
+    char *args4[] = {BINARY_NAME, "10.12.10.22", "aaa:bb:cc:dd:ee:fff", "10.12.10.22", "ff:bb:ff:ff:ee:ff", NULL};
+    char *args5[] = {BINARY_NAME, "abcde", "aaa:bb:cc:dd:ee:fff", "10.12.10.22", "ff:bb:ff:ff:ee:ff", NULL};
+    char *args6[] = {BINARY_NAME, "192.168.1.1", "ff:bb:ff:ff:ee:ff", "192.168.1.1", "ff:bb:ff:ff:ee:ff", NULL};
 
     test_case_t tests[] = {
         {
