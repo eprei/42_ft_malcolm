@@ -52,7 +52,7 @@ bool isValidMacAddr(char *macAddr){
     ++i;
   }
 
-  return isValid ? true : printInvalidMacAddr(macAddr);
+  return isValid && i == MAC_ADDRESS_LENGTH ? true : printInvalidMacAddr(macAddr);
 }
 
 bool validArguments(const int argc, char **argv){
