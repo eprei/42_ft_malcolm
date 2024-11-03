@@ -1,15 +1,15 @@
 #include "../includes/ft_malcolm.h"
 
 int main (const int argc, char **argv){
-  t_malcolm malcolmStruct;
+  t_malcolm malcolm_struct;
 
-  signal(SIGINT, sigintHandler);
+  signal(SIGINT, sigint_handler);
 
-  if (!validArguments(argc, argv)) {
+  if (!valid_arguments(argc, argv)) {
     return -1;
   }
 
-  populateMalcolmStruct(argv, &malcolmStruct);
+  populate_malcolm_struct(argv, &malcolm_struct);
 
-  return launchAttack(malcolmStruct);
+  return launch_attack(malcolm_struct);
 }

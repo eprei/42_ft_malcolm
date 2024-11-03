@@ -1,8 +1,8 @@
 #include "../includes/ft_malcolm.h"
 
-void sigintHandler(int sig) {
+void sigint_handler(int sig) {
     (void)sig;
     printf("SIGINT received\n");
-    // TODO free memory
+    // TODO free memory and ressources
     // TODO not print ^C
 }
