@@ -60,3 +60,6 @@ ft_malcolm
 test
 
 .vagrant
+*.txt
+
+cmake-build-debug/
