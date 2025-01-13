@@ -1,22 +1,25 @@
 # ft_malcolm
 
-A C program that implements Address Resolution Protocol (ARP) spoofing/poisoning, demonstrating one of the most basic Man-in-the-Middle (MITM) attacks. This project explores network security concepts by exploiting vulnerabilities in the ARP protocol implementation.
+A C program that implements Address Resolution Protocol (ARP) spoofing/poisoning, demonstrating one of the most basic
+Man-in-the-Middle (MITM) attacks. This project explores network security concepts by exploiting vulnerabilities in the
+ARP protocol implementation.
 
 ## Project Status
 
-**🚧 Under Active Development**
+**✅ Project Completed**
 
-Current Status:
+Features Implemented:
 - ✅ Project structure and build system
 - ✅ Input validation for IP and MAC addresses
-- ⏳ Signal handling (Pending)
-- 🚧 ARP packet creation (In Progress)
-- ⏳ Network packet handling (Pending)
-- ⏳ ARP spoofing implementation (Pending)
+- ✅ ARP packet creation and handling
+- ✅ Network packet handling
+- ✅ ARP spoofing implementation
 
 ## About The Project
 
-ft_malcolm is an educational project focused on understanding network security, specifically the Address Resolution Protocol (ARP) and its vulnerabilities. The program allows users to perform ARP spoofing by intercepting and modifying ARP requests in a controlled environment.
+ft_malcolm is an educational project focused on understanding network security, specifically the Address Resolution
+Protocol (ARP) and its vulnerabilities. The program allows users to perform ARP spoofing by intercepting and modifying
+ARP requests in a controlled environment.
 
 ### Learning Objectives
 
@@ -32,16 +35,22 @@ ft_malcolm is an educational project focused on understanding network security, 
 - Linux environment (kernel > 3.14)
 - GCC compiler
 - Make utility
+- Root privileges for running the program
 
-> **Note**: This repository includes IntelliJ IDEA configuration files (`.idea` directory) for maintaining consistent 
-> development environments across different workspaces. If you're not using IntelliJ IDEA, you can safely ignore the 
+> **Note**: This repository includes IntelliJ IDEA configuration files (`.idea` directory) for maintaining consistent
+> development environments across different workspaces. If you're not using IntelliJ IDEA, you can safely ignore the
 > `.idea` directory.
 
 ## Installation
 
 1. Clone the repository
 
-2. Compile the program
+2. Before compiling, modify the `NETWORK_ADAPTER` value in `src/ft_malcolm.h` to match your network interface name (e.g., "eth0", "wlan0", etc.). You can find your interface name using the `ifconfig` or `ip a` command.
+```c
+# define NETWORK_ADAPTER "your_interface_name"  // Replace with your network interface
+```
+
+3. Compile the program
 ```bash
 make
 ```
@@ -64,7 +73,7 @@ sudo ./ft_malcolm <source_ip> <source_mac> <target_ip> <target_mac>
 ### Example
 
 ```bash
-sudo ./ft_malcolm 10.12.255.255 ff:bb:ff:ff:ee:ff 10.12.10.22 10:dd:b1:00:00:00
+sudo ./ft_malcolm 192.168.1.1 ff:bb:ff:ff:ee:ff 192.168.1.2 ff:bb:ff:ff:ee:aa
 ```
 
 ### Program Operation
@@ -76,22 +85,46 @@ sudo ./ft_malcolm 10.12.255.255 ff:bb:ff:ff:ee:ff 10.12.10.22 10:dd:b1:00:00:00
 
 ## Features
 
-### Mandatory
-- IPv4 address handling
-- MAC address validation
-- Graceful exit with Ctrl+C
+### Implemented Features
+- IPv4 address handling and validation
+- MAC address validation and conversion
 - Error handling for invalid inputs
 - Single ARP reply spoofing
+- Raw socket packet handling
+- ARP packet manipulation
+- Network interface interaction
+
+## Testing
+
+The project includes a test suite that can be run using:
+```bash
+make test
+```
+
+The test suite checks:
+- Input validation for IP and MAC addresses
+- Argument handling
+- Error cases
+- Valid execution scenarios
+
+## Development Environment
+
+The project includes a Vagrant configuration that sets up three virtual machines:
+- Attacker machine (with GUI and development tools)
+- Target machine
+- Source machine
+
+This allows for testing the ARP spoofing in a controlled environment.
 
 ## Technical Details
 
-The following system calls and functions can be used in this project:
-- Network operations: `sendto`, `recvfrom`, `socket`, `setsockopt`
+The project uses the following system calls and functions:
+- Network operations: `sendto`, `recvfrom`, `socket`
 - Address handling: `inet_pton`, `inet_ntop`, `if_nametoindex`
-- System utilities: `getuid`, `close`, `sigaction`, `signal`
-- Name resolution: `gethostbyname`, `getaddrinfo`, `freeaddrinfo`
-- Interface handling: `getifaddrs`, `freeifaddrs`
+- System utilities: `close`
+- Memory operations: Custom implementation of `memcpy`
 
 ## Security Notice
 
-⚠️ **Important**: This tool is for educational purposes only. Only use it in controlled environments with systems you own or have explicit permission to test. Unauthorized ARP spoofing may be illegal and can cause network disruptions.
+⚠️ **Important**: This tool is for educational purposes only. Only use it in controlled environments with systems you
+own or have explicit permission to test. Unauthorized ARP spoofing may be illegal and can cause network disruptions.
