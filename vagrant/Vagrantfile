@@ -1,40 +1,99 @@
+vm_source = "source"
+ip_source = "192.168.56.110"
 vm_attacker = "attacker"
+ip_attacker = "192.168.56.111"
 vm_target = "target"
-vm_memory = 1024
+ip_target = "192.168.56.112"
 
-Vagrant.configure(2) do |config|
-	config.vm.box = "debian/bookworm64"
-	config.vm.synced_folder '../', '/home/vagrant/ft_malcolm'
-	config.vm.define vm_attacker do |control|
-		control.vm.hostname = vm_attacker
-		control.vm.network "private_network",
-		    ip: "192.168.56.110",
-		    virtualbox__intnet: true
-		control.vm.provider "virtualbox" do |vb|
-			vb.memory = vm_memory
-			vb.cpus = 1
-			vb.gui = false
-			vb.name = vm_attacker
-			vb.linked_clone = true
-			vb.customize ["modifyvm", :id, "--name", vm_attacker]
-		end
-    control.vm.provision "shell", inline: <<-EOF
-        apt-get update
-        apt-get install -y build-essential
-        EOF
-	end
-	config.vm.define vm_target do |control|
-		control.vm.hostname = vm_target
-		control.vm.network "private_network",
-		    ip: "192.168.56.111",
-		    virtualbox__intnet: true
-		control.vm.provider "virtualbox" do |vb|
-			vb.memory = vm_memory
-			vb.cpus = 1
-			vb.gui = false
-			vb.name = vm_target
-			vb.linked_clone = true
-			vb.customize ["modifyvm", :id, "--name", vm_target]
-		end
-	end
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu/jammy64"
+    config.vm.synced_folder '../', '/home/vagrant/ft_malcolm'
+
+    config.vm.define vm_attacker do |control|
+        control.vm.hostname = vm_attacker
+        control.vm.network "private_network",
+            ip: ip_attacker,
+            virtualbox__intnet: true
+        control.vm.provider "virtualbox" do |vb|
+            vb.memory = 12288
+            vb.cpus = 3
+            vb.name = vm_attacker
+            vb.linked_clone = true
+            vb.gui = true
+            vb.customize ["modifyvm", :id, "--vram", "128"]
+            vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+            vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+            vb.customize ["setextradata", :id, "CustomVideoMode1", "1920x1080x24"]
+        end
+
+        control.vm.provision "shell", inline: <<-SHELL
+            export DEBIAN_FRONTEND=noninteractive
+            echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
+
+            apt-get update
+            apt-get upgrade -y
+
+            # Dev tools
+            apt-get install -y build-essential \
+            cmake \
+            git \
+            gdb \
+            wireshark
+
+            # Minimal graphic environment and CLion
+            apt-get install -y --no-install-recommends \
+                ubuntu-desktop-minimal \
+                lightdm \
+                snapd
+
+            # Set up autologin for vagrant user
+            mkdir -p /etc/lightdm/lightdm.conf.d
+            echo "[Seat:*]
+autologin-user=vagrant
+autologin-user-timeout=0" > /etc/lightdm/lightdm.conf.d/autologin.conf
+
+            snap install clion --classic
+
+            # Automatic graphic mode when starting the VM
+            systemctl set-default graphical.target
+
+            # Guest Additions para mejor rendimiento
+            apt-get install -y virtualbox-guest-x11
+
+            reboot
+        SHELL
+    end
+
+    config.vm.define vm_target do |control|
+        control.vm.hostname = vm_target
+        control.vm.network "private_network",
+            ip: ip_target,
+            virtualbox__intnet: true
+        control.vm.provider "virtualbox" do |vb|
+            vb.memory = 1024
+            vb.cpus = 1
+            vb.gui = false
+            vb.name = vm_target
+            vb.linked_clone = true
+        end
+        control.vm.provision "shell", inline: <<-SHELL
+            export DEBIAN_FRONTEND=noninteractive
+            apt-get update
+            apt-get install -y tshark
+        SHELL
+    end
+
+    config.vm.define vm_source do |control|
+        control.vm.hostname = vm_source
+        control.vm.network "private_network",
+            ip: ip_source,
+            virtualbox__intnet: true
+        control.vm.provider "virtualbox" do |vb|
+            vb.memory = 1024
+            vb.cpus = 1
+            vb.gui = false
+            vb.name = vm_source
+            vb.linked_clone = true
+        end
+    end
 end
