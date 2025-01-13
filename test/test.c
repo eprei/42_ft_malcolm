@@ -1,4 +1,4 @@
-#include "../includes/ft_malcolm.h"
+#include "../src/ft_malcolm.h"
 
 typedef struct {
     char *name;
