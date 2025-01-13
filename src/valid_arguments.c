@@ -1,7 +1,8 @@
-#include "../includes/ft_malcolm.h"
+#include "ft_malcolm.h"
 
-bool print_usage(){
+bool usage(){
   printf(USAGE_MSG);
+  printf(USAGE_EXAMPLE);
   return false;
 }
 
@@ -11,12 +12,12 @@ bool print_invalid_ip_address(const char *ip_address){
 }
 
 bool print_invalid_mac_addr(char *mac_address){
-  printf(INVALID_IP_MSG, mac_address);
+  printf(INVALID_MAC_MSG, mac_address);
   return false;
 }
 
 bool correct_number_of_args(const int argc){
-  return argc == EXPECTED_NUMBER_OF_ARGUMENTS ? true : print_usage();
+  return argc == EXPECTED_NUMBER_OF_ARGUMENTS ? true : usage();
 }
 
 bool is_ip_v4(const char *ip_address){
@@ -26,7 +27,7 @@ bool is_ip_v4(const char *ip_address){
     return print_invalid_ip_address(ip_address);
   }
 
-  const int result = inet_pton(AF_INET, ip_address, &(sa.sin_addr));
+  const int result = inet_pton(AF_INET, ip_address, &sa.sin_addr);
   return result == 1 ? true : print_invalid_ip_address(ip_address);
 }
 
@@ -57,7 +58,9 @@ bool is_valid_mac_addr(char *mac_address){
 
 bool valid_arguments(const int argc, char **argv){
   return correct_number_of_args(argc) &&
-    is_ip_v4(argv[1]) && is_valid_mac_addr(argv[2]) &&
-    is_ip_v4(argv[3]) && is_valid_mac_addr(argv[4]);
+    is_ip_v4(argv[1]) &&
+    is_valid_mac_addr(argv[2]) &&
+    is_ip_v4(argv[3]) &&
+    is_valid_mac_addr(argv[4]);
 }
 
