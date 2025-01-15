@@ -1,26 +1,49 @@
 #include "ft_malcolm.h"
 
+static volatile sig_atomic_t running;
+
+void signal_handler(const int signal) {
+    if (SIGINT == signal) {
+        printf("Signal received: SIGINT\n");
+        running = 0;
+    }
+}
+
 int main (const int argc, char **argv) {
     const char *source_ip = argv[1];
     const char *source_spoofed_mac_address = argv[2];
     const char *target_ip = argv[3];
     const char *target_mac_address = argv[4];
     int s;
-    bool listening = true;
+    running = 1;
+
+    struct sigaction sa = {0};
+    sa.sa_handler = signal_handler;
+    sigaction(SIGINT, &sa, NULL);
+
+    if (getuid() != 0) {
+        fprintf(stderr, "This program must be run as root\n");
+        return 1;
+    }
 
     if (!valid_arguments(argc, argv)) {
-        return -1;
+        return 1;
     }
+
     if ((s = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ARP))) < 0) {
-        printf("Error: could not open socket\n");
-        return -1;
+        fprintf(stderr, "Error: could not open socket\n");
+        return 1;
     }
 
     // Wait for incoming packet...
-    while (listening) {
+    while (running) {
         union etherframe frame;
         const ssize_t rec = recvfrom(s, frame.full_frame, FRAME_LEN, 0, NULL, NULL);
         if (rec == -1) {
+            if (errno == EINTR) {
+                fprintf(stderr, "recvfrom system call has been interrupted by a signal\n");
+                continue;
+            }
             printf("Error while receiving packets: %s\n", strerror(errno));
         }
         else if (ntohs(frame.field.header.ether_type) == ETH_P_ARP &&
@@ -57,8 +80,7 @@ int main (const int argc, char **argv) {
                 printf("Sent an ARP reply packet, you may now check the arp table on the target.\n");
             else
                 printf("Error, ARP reply packet could not be sent : %s\n", strerror(errno));
-
-            listening = false;
+            running = 0;
         }
     }
     close(s);
