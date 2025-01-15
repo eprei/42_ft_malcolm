@@ -25,7 +25,7 @@ fclean: clean
 
 
 test: all
-	@$(TEST_PATH)$(TEST_NAME)
+	@sudo $(TEST_PATH)$(TEST_NAME)
 
 re: fclean all
 

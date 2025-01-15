@@ -16,3 +16,11 @@ void print_arp_request(const char *target_ip, const char *target_mac_address) {
     printf("\tMac address of request: %s\n", target_mac_address);
     printf("\tIP address of request: %s\n", target_ip);
 }
+
+int is_target_arp_packet(const char *source_ip, const char *target_ip, const char *target_mac_address,
+    const union etherframe frame) {
+    return ntohs(frame.field.header.ether_type) == ETH_P_ARP &&
+           is_equal_mac(frame.field.header.ether_shost, target_mac_address) &&
+           is_equal_ip(frame.field.arp.arp_spa, target_ip) &&
+           is_equal_ip(frame.field.arp.arp_tpa, source_ip);
+}

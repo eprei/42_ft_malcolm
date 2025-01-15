@@ -38,3 +38,12 @@ int	ft_tolower(const int c)
 		return c + 32;
 	return c;
 }
+
+size_t	ft_strlen(const char *s)
+{
+	const char *start = s;
+
+	while (*s)
+		s++;
+	return s - start;
+}

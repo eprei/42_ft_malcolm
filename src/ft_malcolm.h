@@ -11,6 +11,7 @@
 # include <arpa/inet.h>
 # include <net/if.h>
 # include <sys/socket.h>
+# include <ifaddrs.h>
 # include <netpacket/packet.h>
 # include <net/ethernet.h>
 # include <netinet/if_ether.h>
@@ -22,7 +23,6 @@
 # define EXPECTED_NUMBER_OF_ARGUMENTS 5
 # define IP_ADDRESS_LENGTH 15
 # define MAC_ADDRESS_LENGTH 17
-# define NETWORK_ADAPTER "enp0s8"
 # define FRAME_LEN sizeof(struct ether_header) + sizeof(struct ether_arp)
 # define IPV4_ADDR_LEN sizeof(struct in_addr)
 
@@ -68,10 +68,17 @@ bool is_equal_mac(const uint8_t mac_1_in_bytes[ETH_ALEN], const char *mac_2_in_s
 /* arp_utils.c */
 void spoof_arp_mac_addr(uint8_t arp_sha[], const char *mac_str);
 void print_arp_request(const char *target_ip, const char *target_mac_address);
+int is_target_arp_packet(const char *source_ip, const char *target_ip, const char *target_mac_address, union etherframe frame);
 
 /* libft.c */
 void *ft_memcpy(void *dst, const void *src, size_t n);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	ft_tolower(int c);
+size_t	ft_strlen(const char *s);
+
+/* network_interface.c */
+bool interface_is_in_target_network(struct ifaddrs *ifap, const char *target_ip);
+bool is_suitable_interface(struct ifaddrs *ifap, const char *target_ip);
+void find_suitable_interface(char *interface_name, const char *target_ip);
 
 #endif
