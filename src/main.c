@@ -1,13 +1,6 @@
 #include "ft_malcolm.h"
 
-static volatile sig_atomic_t running;
-
-void signal_handler(const int signal) {
-    if (SIGINT == signal) {
-        printf("Signal received: SIGINT\n");
-        running = 0;
-    }
-}
+volatile sig_atomic_t running;
 
 void send_spoofed_packet(const char *source_spoofed_mac_address, const char *target_ip, const char *target_mac_address,
     const int s, char interface_name[16], union etherframe *frame) {

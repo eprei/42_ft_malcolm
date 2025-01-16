@@ -81,4 +81,7 @@ bool interface_is_in_target_network(struct ifaddrs *ifap, const char *target_ip)
 bool is_suitable_interface(struct ifaddrs *ifap, const char *target_ip);
 void find_suitable_interface(char *interface_name, const char *target_ip);
 
+/* signal_handler.c */
+void signal_handler(const int signal);
+
 #endif

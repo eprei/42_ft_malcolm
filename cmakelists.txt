@@ -16,4 +16,5 @@ add_executable(ft_malcolm
     src/libft.c
     src/network_interface.c
     src/valid_arguments.c
+    src/signal_handler.c
 )
