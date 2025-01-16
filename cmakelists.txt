@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.10)
+project(ft_malcolm C)
+
+set(CMAKE_C_STANDARD 11)
+
+# Include directories
+include_directories(src)
+
+# Add main executable
+add_executable(ft_malcolm
+    src/main.c
+    src/valid_arguments.c
+    src/compare.c
+    src/convert.c
+    src/arp_utils.c
+    src/libft.c
+    src/network_interface.c
+    src/valid_arguments.c
+)
