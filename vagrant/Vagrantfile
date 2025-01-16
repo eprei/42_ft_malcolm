@@ -83,17 +83,17 @@ autologin-user-timeout=0" > /etc/lightdm/lightdm.conf.d/autologin.conf
         SHELL
     end
 
-    config.vm.define vm_source do |control|
-        control.vm.hostname = vm_source
-        control.vm.network "private_network",
-            ip: ip_source,
-            virtualbox__intnet: true
-        control.vm.provider "virtualbox" do |vb|
-            vb.memory = 1024
-            vb.cpus = 1
-            vb.gui = false
-            vb.name = vm_source
-            vb.linked_clone = true
-        end
-    end
+#     config.vm.define vm_source do |control|
+#         control.vm.hostname = vm_source
+#         control.vm.network "private_network",
+#             ip: ip_source,
+#             virtualbox__intnet: true
+#         control.vm.provider "virtualbox" do |vb|
+#             vb.memory = 1024
+#             vb.cpus = 1
+#             vb.gui = false
+#             vb.name = vm_source
+#             vb.linked_clone = true
+#         end
+#     end
 end
