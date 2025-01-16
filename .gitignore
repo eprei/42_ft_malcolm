@@ -62,3 +62,4 @@ test
 .vagrant
 
 cmake-build-debug/
+.Trash-1000
