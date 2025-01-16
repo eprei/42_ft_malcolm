@@ -48,8 +48,8 @@ union etherframe
 #define WHITE   "\033[37m"
 
 /* messages to print */
-# define USAGE_MSG "Usage: " BINARY_NAME " <source ip> <source mac address> <target ip> <target mac address>\n"
-# define USAGE_EXAMPLE "Usage: " BINARY_NAME " 192.168.56.110 42:42:42:42:42 192.168.56.111 12:34:56:78:90>\n"
+# define USAGE_MSG "USAGE: sudo " BINARY_NAME " <source ip> <source mac address> <target ip> <target mac address>\n"
+# define USAGE_EXAMPLE "USAGE_EXAMPLE: sudo " BINARY_NAME " \"192.168.56.110\" \"42:42:42:42:42:42\" \"192.168.56.112\" \"08:00:27:ec:a4:df\"\n"
 # define INVALID_IP_MSG RED "Unknown host or invalid IP address: %s\n" RESET
 # define INVALID_MAC_MSG RED "Invalid MAC address: %s\n" RESET
 
