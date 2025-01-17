@@ -39,10 +39,6 @@ ARP requests in a controlled environment.
 - Make utility
 - Root privileges for running the program
 
-> **Note**: This repository includes IntelliJ IDEA configuration files (`.idea` directory) for maintaining consistent
-> development environments across different workspaces. If you're not using IntelliJ IDEA, you can safely ignore the
-> `.idea` directory.
-
 ## Installation
 
 1. Clone the repository
