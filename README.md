@@ -14,6 +14,7 @@ Features Implemented:
 - ✅ ARP packet creation and handling
 - ✅ Network packet handling
 - ✅ ARP spoofing implementation
+- ✅ Automatic network interface detection
 
 ## About The Project
 
@@ -29,6 +30,7 @@ ARP requests in a controlled environment.
 - Implementing raw socket programming in C
 - Handling network packets and protocol structures
 - Working with IPv4 addressing and MAC addresses
+- Automatic network interface detection and configuration
 
 ## Prerequisites
 
@@ -45,12 +47,7 @@ ARP requests in a controlled environment.
 
 1. Clone the repository
 
-2. Before compiling, modify the `NETWORK_ADAPTER` value in `src/ft_malcolm.h` to match your network interface name (e.g., "eth0", "wlan0", etc.). You can find your interface name using the `ifconfig` or `ip a` command.
-```c
-# define NETWORK_ADAPTER "your_interface_name"  // Replace with your network interface
-```
-
-3. Compile the program
+2. Compile the program
 ```bash
 make
 ```
@@ -73,15 +70,19 @@ sudo ./ft_malcolm <source_ip> <source_mac> <target_ip> <target_mac>
 ### Example
 
 ```bash
-sudo ./ft_malcolm 192.168.1.1 ff:bb:ff:ff:ee:ff 192.168.1.2 ff:bb:ff:ff:ee:aa
+sudo ./ft_malcolm "192.168.56.110" "42:42:42:42:42:42" "192.168.56.112" "08:00:27:ec:a4:df"
 ```
 
 ### Program Operation
 
-1. The program waits for an ARP request from the target
-2. When detected, it sends a single ARP reply with the spoofed information
-3. The target's ARP table is updated with the spoofed association
-4. The program exits after successful spoofing
+1. The program automatically detects and selects a suitable network interface that:
+    - Is up and running
+    - Is not a loopback interface
+    - Is in the same network as the target IP
+2. Waits for an ARP request from the target
+3. When detected, it sends a single ARP reply with the spoofed information
+4. The target's ARP table is updated with the spoofed association
+5. The program exits after successful spoofing
 
 ## Features
 
@@ -92,7 +93,7 @@ sudo ./ft_malcolm 192.168.1.1 ff:bb:ff:ff:ee:ff 192.168.1.2 ff:bb:ff:ff:ee:aa
 - Single ARP reply spoofing
 - Raw socket packet handling
 - ARP packet manipulation
-- Network interface interaction
+- Automatic network interface detection and configuration
 
 ## Testing
 
@@ -123,6 +124,7 @@ The project uses the following system calls and functions:
 - Address handling: `inet_pton`, `inet_ntop`, `if_nametoindex`
 - System utilities: `close`
 - Memory operations: Custom implementation of `memcpy`
+- Network interface detection: `getifaddrs`, `freeifaddrs`
 
 ## Security Notice
 
